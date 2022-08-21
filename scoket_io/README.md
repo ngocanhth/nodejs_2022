@@ -5,3 +5,12 @@ yarn add express mongoose nodemon morgan helmet cors body-parser dotenv socketio
 # client
 
 yarn add @mui/material @emotion/react @emotion/styled @fontsource/lato axios moment react-file-base64 redux react-redux redux-actions redux-saga
+
+======================
+chat app
+=======================
+
+npx create-next-app client
+
+# server
+yarn init -y

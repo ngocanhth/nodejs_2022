@@ -6,8 +6,81 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/style.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    </head>
+        <script src="socket.io/socket.io.js"></script>
+
+        <script>
+            var socket = io("http://localhost:3000");
+            
+            socket.on("Server-send-data", function(data){
+                $("#noidung").append(data + ",")
+            })
+
+            socket.on("Server-send-total", function(data){
+                $("#tong").append(data + ",")
+            })
+
+            socket.on("Server-send-mau", function(data){
+                $("body").attr("bgColor", data)
+            })
+            
+            $(document).ready(function(){
+               // alert("ket noi")
+
+               $("#mrA").click(function(){
+                socket.emit("Client-send-data", 'Hello');
+               })
+
+               $("#total").click(function(){
+                
+                var a = $("#number1").val();
+                var b = $("#number2").val();
+
+                var c = parseFloat(a) + parseFloat(b)
+              //  console.log(a, b)
+                socket.emit("Client-send-total", c);
+               })
+
+               $("#red").click(function(){
+                    socket.emit("Client-send-mau", 'red');
+                })
+                $("#green").click(function(){
+                    socket.emit("Client-send-mau", 'green');
+                })
+                $("#yellow").click(function(){
+                    socket.emit("Client-send-mau", 'yellow');
+                })
+            })
+        </script>
+
+</head>
     <body>
-    
+        <style>
+        #red, #green, #yellow {
+            width: 200px;
+            height: 50px;
+        }
+        #red {
+            background-color: red;
+        }
+        #green {
+            background-color: green;
+        }
+        #yellow {
+            background-color: yellow;
+        }
+        </style>
+        <div id="mrA">Click send</div>
+        <div id="noidung"></div>
+        <div id="tonghaiso">
+            <input id="number1" type="text">
+            <input id="number2" type="text">
+            <div id="tong"></div>
+            <button id="total">tinh tong hai so</button>
+        </div>
+        <div id="color">
+            <div id="red">red</div>
+            <div id="green">green</div>
+            <div id="yellow">ryellowed</div>
+        </div>
     </body>
 </html>
